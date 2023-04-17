@@ -41,8 +41,8 @@ jobs:
           git config user.name ${NAME}
           git config user.email ${EMAIL}
         env:
-          NAME: "Kazumakobayash"
-          EMAIL: "kazuma.kobayashi.3t@gmail.com"
+          NAME: "hajime kiyama"
+          EMAIL: "hajime.7393@gmail.com"
 
       - name: Commit ${{ env.FILE_NAME }}
         run: |
