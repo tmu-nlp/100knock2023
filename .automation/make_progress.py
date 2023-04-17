@@ -72,8 +72,9 @@ def plot_progress(users: np.array, scores: np.array):
     date_list.append(datetime.date(2023, 7, 24))
 
     d = [date for date in date_list if today >= date]
+    # print(date_list)
     xmin, xmax = plt.xlim()
-    if len(d) != 10:
+    if len(d) != 10 and len(d) != 0:
         label = "{}Border".format(str(date_list[len(d)])[5:])
         plt.hlines((len(d)+1) * 10, xmin, xmax, linewidth=2,
                    linestyle='dashed', color="gray", label=label)
