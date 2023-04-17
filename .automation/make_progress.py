@@ -111,7 +111,7 @@ if __name__ == "__main__":
     CHAPTER = 10
     QUESTIONS = [10] * CHAPTER
     # progress bar に表示しないディレクトリ名
-    IGNORE = ["hajime", "ling"]
+    IGNORE = []
     def is_ignored(name): return name in IGNORE or name.startswith(".")
 
     main()
