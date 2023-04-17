@@ -1,1 +1,0 @@
-fairseq-interactive --path ./checkpoint_best.pt ./ < test.ja | grep '^H' | cut -f3 > 92.out
