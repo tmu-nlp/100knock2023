@@ -70,9 +70,11 @@ def plot_progress(users: np.array, scores: np.array):
     date_list.append(datetime.date(2023, 6, 19))
     date_list.append(datetime.date(2023, 7, 3))
     date_list.append(datetime.date(2023, 7, 24))
-
+    # print(date_list)
     d = [date for date in date_list if today >= date]
     # print(date_list)
+    # print(d)
+    # print(len(d))
     xmin, xmax = plt.xlim()
     if len(d) != 10 and len(d) != 0:
         label = "{}Border".format(str(date_list[len(d)])[5:])
@@ -80,8 +82,11 @@ def plot_progress(users: np.array, scores: np.array):
                    linestyle='dashed', color="gray", label=label)
         plt.xlim(xmin, xmax)
 
-    label = "{}Border".format(str(d[-1])[5:])
-    plt.hlines(len(d) * 10, xmin, xmax, linewidth=4, color="red", label=label)
+    if len(d) != 0:
+        label = "{}Border".format(str(d[-1])[5:])
+        plt.hlines(len(d) * 10, xmin, xmax, linewidth=4,
+                   color="red", label=label)
+
     plt.xlim(xmin, xmax)
 
     # グラフの設定
@@ -112,7 +117,7 @@ if __name__ == "__main__":
     CHAPTER = 10
     QUESTIONS = [10] * CHAPTER
     # progress bar に表示しないディレクトリ名
-    IGNORE = []
+    IGNORE = ["hajime"]
     def is_ignored(name): return name in IGNORE or name.startswith(".")
 
     main()
