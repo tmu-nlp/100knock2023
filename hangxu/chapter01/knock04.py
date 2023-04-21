@@ -1,4 +1,4 @@
-a="Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
+a=" Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
 
 a=a.replace('.','')
 a=a.replace(',','')
