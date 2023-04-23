@@ -14,5 +14,8 @@ def cipher(src: str):
             dst += c
     return dst
 
+src = input("put any text : ")
+print(cipher(src))
 
-print(cipher('I am Koki Itai'))
+# put any text : hogehoge
+# sltvsltv

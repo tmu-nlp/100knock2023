@@ -33,3 +33,11 @@ if 'se' in X:
     print('se in X')
 if 'se' in Y:
     print('se in Y')
+
+
+# setX: {'pa', 'ar', 'ap', 'ra', 'ad', 'di', 'se', 'is'}
+# setY :  {'pa', 'ar', 'gr', 'ph', 'ag', 'ra', 'ap'}
+# union :  {'pa', 'ar', 'gr', 'ph', 'ag', 'ap', 'ra', 'ad', 'di', 'se', 'is'}
+# intersection :  {'ar', 'ap', 'pa', 'ra'}
+# difference :  {'di', 'ad', 'se', 'is'}
+# se in X

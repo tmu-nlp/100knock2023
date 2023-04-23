@@ -12,11 +12,14 @@ def get_article(src_json):
     return articles
 
 def find_category(content:str):
+    categories = ""
     content_list = content.split('\n')
     for line in content_list:
         if line.startswith('[[Category:'):
-            print(line)
-    return
+            categories = categories + \
+                line.replace('[[Category:','').replace(']]','') \
+                    + ', '
+    return categories[:-2]
 
 def show_index(articles):
     index = [article['title'] for article in articles]
@@ -30,19 +33,10 @@ if country == 'index':
     print(show_index(articles))
 
 else:
-    try:
-        for article in articles:
-            if article['title'] == country:
-                find_category(article['text'])
-    except TypeError:
-        pass
+    for article in articles:
+        if article['title'] == country:
+            print(find_category(article['text']))
 
-
-# output:
-
-# Country Name = アメリカ合衆国
-# [[Category:アメリカ合衆国|*]]
-# [[Category:海洋国家]]
-# [[Category:G8加盟国]]
-# [[Category:連邦制国家]]
-# [[Category:共和国]]
+## Output
+# Country Name = 日本
+# 日本|*, 島国, 現存する君主国, G8加盟国
