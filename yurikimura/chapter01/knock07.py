@@ -6,3 +6,6 @@ def formated_sentence(x, y, z):
 
 
 print(formated_sentence(12, "気温", 22.4))
+
+
+# 12時の気温は22.4

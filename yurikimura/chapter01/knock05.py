@@ -13,3 +13,6 @@ src = "I am an NLPer"
 
 print(word_ngram(src, 2))
 print(letter_ngram(src, 2))
+
+# [['I', 'am'], ['am', 'an'], ['an', 'NLPer']]
+# ['I ', ' a', 'am', 'm ', ' a', 'an', 'n ', ' N', 'NL', 'LP', 'Pe', 'er']

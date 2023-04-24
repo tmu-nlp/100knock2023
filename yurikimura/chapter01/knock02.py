@@ -7,3 +7,5 @@ for i in range(len(src1)):
     dst = dst + src2[i]
 
 print(dst)
+
+# パタトクカシーー

@@ -1,3 +1,4 @@
+
 def moji(x,y,z)：
 SyntaxError: invalid character '：' (U+FF1A)
 def moji(x,y,z):

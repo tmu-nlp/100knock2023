@@ -5,6 +5,8 @@ words = {}
 for i in src_alpha.split(" "):
     words[i] = len(i)
 
-dst = [v for k, v in words.items()]
+dst = [v for _, v in words.items()]
 
 print(dst)
+
+# [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]
