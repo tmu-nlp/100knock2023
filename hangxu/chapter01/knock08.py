@@ -1,3 +1,4 @@
+
 def cipher(x):
     a=""
     for y in x:
@@ -10,3 +11,4 @@ def cipher(x):
 
 print(cipher(b))
 print(cipher(cipher(b))
+

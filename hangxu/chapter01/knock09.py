@@ -1,3 +1,4 @@
+
 a="I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
 a=a.replace(':','')
 a=a.replace('.','')
