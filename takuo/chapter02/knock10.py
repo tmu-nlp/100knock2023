@@ -1,5 +1,5 @@
 with open("chapter02/popular-names.txt")as pns:
-    lines = pns.readlines()  # huge memory needed
+    lines = pns.readlines()
     print(len(lines))
 
-#2780
+# 2780
