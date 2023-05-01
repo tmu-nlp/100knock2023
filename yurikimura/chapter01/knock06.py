@@ -1,5 +1,7 @@
 # 06. 集合Permalink
-# “paraparaparadise”と”paragraph”に含まれる文字bi-gramの集合を，それぞれ, XとYとして求め，XとYの和集合，積集合，差集合を求めよ．さらに，’se’というbi-gramがXおよびYに含まれるかどうかを調べよ．
+# “paraparaparadise”と”paragraph”に含まれる文字bi-gramの集合を，
+# それぞれ, XとYとして求め，XとYの和集合，積集合，差集合を求めよ．
+# さらに，’se’というbi-gramがXおよびYに含まれるかどうかを調べよ．
 
 def letter_ngram(src: str, n: int):
     dst = [src[i:i+n] for i in range(len(src)-n+1)]
