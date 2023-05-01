@@ -13,5 +13,3 @@ def total_lines(filename):
     with open(filename) as file:
         total_lines = count_lines(lines(file))
         return total_lines
-    
-print(total_lines("/home/nevucide/100knock2023/song/chapter02/popular-names.txt"))
