@@ -1,5 +1,7 @@
-# 23. セクション構造Permalink
-# 記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら1）を表示せよ．
+'''
+24. ファイル参照の抽出Permalink
+記事から参照されているメディアファイルをすべて抜き出せ．
+'''
 
 import json
 import re
@@ -12,7 +14,7 @@ def get_article(src_json):
             articles.append(my_json)
     return articles
 
-def find_section(content):
+def find_medium(content):
     content_list = content.split('\n')
     for line in content_list:
         line.strip()
@@ -20,20 +22,19 @@ def find_section(content):
         if re.search(pattern, line):
             ans = re.findall(pattern, line, re.MULTILINE)
             ans = "\n".join(ans)
-            print(ans)
+    return ans
 
 def show_index(articles):
     index = [article['title'] for article in articles]
     index.sort()
     return index
 
-country = input("Country Name = ")
-articles = get_article('jawiki-country.json')
-
-if country == 'index':
-    print(show_index(articles))
-
-else:
-    for article in articles:
-        if article['title'] == country:
-            find_section(article['text'])
+if __name__ == "__main__":
+    country = input("Country Name = ")
+    articles = get_article('jawiki-country.json')
+    if country == 'index':
+        print(show_index(articles))
+    else:
+        for article in articles:
+            if article['title'] == country:
+                print(find_medium(article['text']))
