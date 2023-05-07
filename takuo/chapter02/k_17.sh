@@ -1,0 +1,2 @@
+cut -f 1 popular-names.txt | sort | uniq | wc -l
+#136
