@@ -17,11 +17,11 @@ params = {
 response = pip._vendor.requests.get(base_url, params=params)
 
 # Parse the JSON response
-json_data = json.loads(response.text)
+DATA = json.loads(response.text)
 
 # Extract the URL of the flag image in SVG format
-pages = json_data['query']['pages']
-for page_id, page_info in pages.items():
+PAGES = DATA['query']['pages']
+for page_id, page_info in PAGES.items():
     if 'imageinfo' in page_info:
         flag_url = page_info['imageinfo'][0]['url']
         break
