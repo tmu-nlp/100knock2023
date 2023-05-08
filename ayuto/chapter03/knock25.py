@@ -9,7 +9,7 @@ with gzip.open("jawiki-country.json.gz", "r") as f:
             break
 L = UK_data["text"].split("\n")
 
-fundamental_info = re.search("{{基礎情報[\s\S]*?}}\n\n", UK_data["text"]).group()
+fundamental_info = re.search("{{基礎情報[\s\S]*?}}\n\n", UK_data["text"]).group().rstrip("}\n")
 
 fundamental_info = fundamental_info.split("\n|")
 
