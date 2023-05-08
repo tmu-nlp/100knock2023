@@ -4,14 +4,11 @@ import pip._vendor.requests
 # Define the base URL for the MediaWiki API
 base_url = "https://en.wikipedia.org/w/api.php"
 
-# Define the name of the country whose flag we want to retrieve
-country_name = "United Kingdom"
-
 # Define the parameters to send with the API request
 params = {
     "action": "query",
     "format": "json",
-    "titles": f"File:Flag of {country_name}.svg",
+    "titles": f"File:Flag of United Kingdom.svg",
     "prop": "imageinfo",
     "iiprop": "url"
 }
