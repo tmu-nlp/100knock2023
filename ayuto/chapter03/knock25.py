@@ -20,6 +20,8 @@ for s in fundamental_info:
     v = re.search("=[\s\S]*?$", s)
     if k and v:
 
-        D[k.group()[:-2]] = v.group()[2:]
+        D[re.sub("[ =]", "",k.group())] = re.sub("[ =]", "",v.group())
 
-print(D)
+for d in D:
+    print(d, D[d])
+    print("------------")
