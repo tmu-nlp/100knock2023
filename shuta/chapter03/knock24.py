@@ -10,5 +10,5 @@ print(jawiki_uk)
 
 #本題
 import re
-media = re.findall('ファイル:(.*)\|thumb', jawiki_uk)
-print(media)
+media = re.findall('(ファイル:.*\]\])', jawiki_uk)
+media
