@@ -1,7 +1,7 @@
 import gzip
 import json
 
-filename = './Song/chapter03/enwiki-country.json.gz'
+filename = './song/chapter03/enwiki-country.json.gz'
 
 # Open the compressed JSON file
 with gzip.open(filename, 'rt') as file:
