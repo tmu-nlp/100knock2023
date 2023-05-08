@@ -8,7 +8,8 @@ f.close()
 
 l = re.split('\n', data)
 
-
 l='\n'.join(l[len(l)-num:])
 
 print(l)
+
+#tail -n 10 popular-names.txt
