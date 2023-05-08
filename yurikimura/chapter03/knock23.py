@@ -26,13 +26,14 @@ def show_index(articles):
     index.sort()
     return index
 
-country = input("Country Name = ")
-articles = get_article('jawiki-country.json')
+if __name__ == "__main__":
+    country = input("Country Name = ")
+    articles = get_article('jawiki-country.json')
 
-if country == 'index':
-    print(show_index(articles))
+    if country == 'index':
+        print(show_index(articles))
 
-else:
-    for article in articles:
-        if article['title'] == country:
-            find_section(article['text'])
+    else:
+        for article in articles:
+            if article['title'] == country:
+                find_section(article['text'])
