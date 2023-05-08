@@ -17,3 +17,5 @@ l=''.join(l)
 f=open('knock13.txt', 'w')
 f.write(l)
 f.close()
+
+#paste  col1.txt col2.txt > 13.txt

@@ -9,3 +9,5 @@ l = re.split('\n', data)
 s=set(l)
 
 print(s)
+
+#cut -f 1 popular-names.txt　| sort | uniq
