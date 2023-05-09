@@ -4,18 +4,14 @@
 辞書オブジェクトとして格納せよ．
 '''
 
-import json
 import re
-
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
+from knock21 import get_article, show_index
 
 def find_basic_info(content):
+    '''
+    マークダウンテキストの中から順序無しリストのグループを全件抽出したい場合は
+    オプション re.MULTILINE と re.DOTALL を指定
+    '''
     pattern = r'^\{\{基礎情報.*?$(.*?)^\}\}'
     info = re.findall(pattern, content, re.MULTILINE + re.DOTALL)
 
@@ -23,14 +19,8 @@ def find_basic_info(content):
     result = dict(re.findall(pattern, info[0], re.MULTILINE + re.DOTALL))
     return result
 
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
-
 country = input("Country Name = ")
 articles = get_article('jawiki-country.json')
-
 
 if __name__ == "__main__":
     if country == 'index':
@@ -39,3 +29,8 @@ if __name__ == "__main__":
         for article in articles:
             if article['title'] == country:
                 print(find_basic_info(article['text']))
+
+# Country Name = イギリス
+# {'略名': 'イギリス', '日本語国名': 'グレートブリテン及び北アイルランド連合王国',
+# '公式国名': '{{lang|en|United Kingdom of Great Britain and Northern Ir
+# eland}}<ref>英語以外での正式国名:<br />\n*{{lang|gd|An Rìoghachd ...
