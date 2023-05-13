@@ -6,10 +6,10 @@
 import os
 from knock30 import token_mapping
 
-def word_count(dst):
+def word_count(tokens):
     counts = {}
 
-    for data in dst:
+    for data in tokens:
         if data["surface"] in counts.keys():
             counts[data["surface"]] += 1
         else:
@@ -21,8 +21,8 @@ def pick_value(x):
     return x[1]
 
 neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
-dst = token_mapping(neko_mecab)
-ans = word_count(dst)
+tokens = token_mapping(neko_mecab)
+ans = word_count(tokens)
 ans = sorted(ans.items(), key=pick_value, reverse=True)
 print(ans)
 

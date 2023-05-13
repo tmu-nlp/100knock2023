@@ -9,6 +9,8 @@ MeCabを使って形態素解析し，その結果をneko.txt.mecabというフ�
 第4章の残りの問題では，ここで作ったプログラムを活用せよ．
 '''
 
+import os
+
 def token_mapping(source):
     dst = []
     with open(source, "rt") as text:
@@ -26,6 +28,7 @@ def token_mapping(source):
     return dst
 
 if __name__ == "__main__":
-    dst = token_mapping("neko.txt.mecab")
+    neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
+    dst = token_mapping(neko_mecab)
     for data in dst:
         print(data)
