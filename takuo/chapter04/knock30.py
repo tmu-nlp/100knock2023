@@ -31,4 +31,4 @@ def get_mecabed_list(mecabed_text_path: str) -> list:
 
 
 if __name__ == "__main__":
-    get_mecabed_list("chapter04/neko.txt.mecab")
+    print(get_mecabed_list("chapter04/neko.txt.mecab"))
