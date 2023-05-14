@@ -1,1 +1,0 @@
-head -n 10 popular-names.txt > bash14.txt
