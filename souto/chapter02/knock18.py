@@ -12,3 +12,5 @@ l.sort(key = lambda x: x[2], reverse=True)
 l=[l[i][0] + '\t' + l[i][1] + '\t' + str(l[i][2]) + '\t' + l[i][3] for i in range(len(l))]
 l='\n'.join(l)
 print(l)
+
+#sort -nrk 3 popular-names.txt

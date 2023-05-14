@@ -12,6 +12,7 @@ l='\n'.join(l[:num])
 
 print(l)
 
-
+#head -n10 popular-names.txt
+#10行指定している
 
 
