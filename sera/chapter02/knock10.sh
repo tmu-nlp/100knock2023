@@ -1,1 +1,0 @@
-wc -l popular-names.txt > bash10.txt
