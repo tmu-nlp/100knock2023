@@ -1,0 +1,1 @@
+split -l 5 ../popular-names.txt splited

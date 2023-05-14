@@ -1,3 +1,4 @@
+
 STR = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
 
 
@@ -14,5 +15,6 @@ def rm_punct(raw_string):
 
 words = [rm_punct(w) for w in STR.split(' ')]
 words_len = [len(w) for w in words]
+
 
 print(words_len)
