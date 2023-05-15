@@ -29,7 +29,7 @@ def extract_longest_noun_phrase(sentence):
     longest_noun_phrase = []
 
     for word in sentence:
-        if word['pos'].startswith('名詞'):
+        if word['pos'] == '名詞':
             noun_phrase.append(word)
         else:
             if len(noun_phrase) > len(longest_noun_phrase):
@@ -40,11 +40,28 @@ def extract_longest_noun_phrase(sentence):
     if len(noun_phrase) > len(longest_noun_phrase):
         longest_noun_phrase = noun_phrase
 
-    print(longest_noun_phrase)
-    
-
     return longest_noun_phrase
 
-extract_longest_noun_phrase(sentence)
+def extract_and_strip_values(dictionary_list):
+    stripped_values = []
+
+    for dictionary in dictionary_list:
+        if dictionary:
+            first_value = next(iter(dictionary.values()))
+            stripped_value = first_value.strip()
+            stripped_values.append(stripped_value)
+
+    return stripped_values
+
+def extract_and_join_elements(input_list):
+    joined_string = ''.join(str(element) for element in input_list)
+    return joined_string
+
+dic = extract_longest_noun_phrase(sentence)
+stripped_values = extract_and_strip_values(dic)
+result = extract_and_join_elements(stripped_values)
+
+print(result)
+
 
 

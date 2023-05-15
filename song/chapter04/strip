@@ -1,0 +1,21 @@
+def extract_and_strip_values(dictionary_list):
+    stripped_values = []
+
+    for dictionary in dictionary_list:
+        if dictionary:
+            first_value = next(iter(dictionary.values()))
+            stripped_value = first_value.strip()
+            stripped_values.append(stripped_value)
+
+    return stripped_values
+
+
+# Example usage
+dictionary_list = [
+    {'key1': '   Value 1  ', 'key2': 'Value 2'},
+    {'key3': ' Value 3 ', 'key4': '   Value 4  '},
+    {'key5': '   Value 5   '}
+]
+
+stripped_values = extract_and_strip_values(dictionary_list)
+print(stripped_values)
