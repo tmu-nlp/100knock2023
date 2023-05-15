@@ -1,0 +1,1 @@
+gunzip jawiki-country.json.gz
