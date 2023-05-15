@@ -3,8 +3,8 @@ from knock30 import result
 
 words = []  
 for word in result:
-    for numb in range(len(word)):
-        words.append(word[numb]['base'])
+    for a in word:
+        words.append(a['base'])
 
 
 from collections import Counter
