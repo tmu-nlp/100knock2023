@@ -5,6 +5,9 @@ from collections import Counter
 
 names_str = ""
 
+def alt_lambda(n):
+    return n[1]
+
 with open("popular-names.txt", "r") as my_file:
     for line in my_file:
         line = line.strip()
@@ -12,7 +15,8 @@ with open("popular-names.txt", "r") as my_file:
         names_str = names_str + word + " "
 
 name_dict = Counter(names_str.split())
-name_dict = sorted(name_dict.items(), key=lambda x:x[1], reverse=True)
+name_dict = sorted(name_dict.items(), key=alt_lambda, reverse=True)
+
 
 for pair in name_dict:
     print(f"{pair[1]} {pair[0]}")

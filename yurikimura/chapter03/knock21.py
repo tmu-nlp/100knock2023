@@ -11,17 +11,17 @@ def get_article(src_json):
             articles.append(my_json)
     return articles
 
+def show_index(articles):
+    index = [article['title'] for article in articles]
+    index.sort()
+    return index
+
 def find_category(content:str):
     content_list = content.split('\n')
     for line in content_list:
         if line.startswith('[[Category:'):
             print(line)
     return
-
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
 
 if __name__ == "__main__":
     country = input("Country Name = ")

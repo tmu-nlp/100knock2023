@@ -1,15 +1,7 @@
 # 22. カテゴリ名の抽出Permalink
 # 記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．
 
-import json
-
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
+from knock21 import get_article, show_index
 
 def find_category(content:str):
     categories = ""
@@ -20,11 +12,6 @@ def find_category(content:str):
                 line.replace('[[Category:','').replace(']]','') \
                     + ', '
     return categories[:-2]
-
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
 
 if __name__ == "__main__":
     country = input("Country Name = ")

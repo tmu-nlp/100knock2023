@@ -1,16 +1,8 @@
 # 23. セクション構造Permalink
 # 記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら1）を表示せよ．
 
-import json
 import re
-
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
+from knock21 import get_article, show_index
 
 def find_section(content):
     content_list = content.split('\n')
@@ -20,11 +12,6 @@ def find_section(content):
         if re.search(pattern, line):
             match = re.findall('=', line)
             print(line + "level :" + str(int(len(match)/2 - 1)))
-
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
 
 if __name__ == "__main__":
     country = input("Country Name = ")

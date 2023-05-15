@@ -4,38 +4,20 @@
 縦軸はx軸で示される出現頻度となった単語の異なり数（種類数）である．
 '''
 
+import os
 import matplotlib.pyplot as plt
-from collections import defaultdict
+import japanize_matplotlib # pip install japanese-matplotlib
+from knock30 import token_mapping
+from knock35 import word_count, pick_value
 
-dic = dict([("surface", 0), ("base", 0), ("pos", 0), ("pos1", 0)])
-ans = []
+if __name__ == "__main__":
+    neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
+    tokens = token_mapping(neko_mecab)
+    data = word_count(tokens)
+    data = sorted(data.items(), key=pick_value, reverse=True)
 
-with open("neko.txt.mecab", "r") as text:
-    for line in text:
-        if line != 'EOS\n':
-            line = line.replace('\t', ',').split(',')
-            if line[0] != '\n':
-                dic["surface"] = line[0]
-                dic["base"] = line[7]
-                dic["pos"] = line[1]
-                dic["pos1"] = line[2]
-                if line[0] != '':
-                    ans.append(dic.copy())
+    values = [data[i][1] for i in range(len(data))]
 
-fre = defaultdict(lambda: 0)
-
-for data in ans:
-    if data["pos"] != "記号":
-        fre[data["surface"]] += 1
-
-fre = sorted(fre.items(), key=lambda x: x[1], reverse=True)
-
-key = []
-for data in fre:
-    key.append(data[1])
-
-print(key)
-
-plt.figure(figsize=(8, 4))
-plt.hist(key, bins=100)
-plt.show()
+    plt.figure(figsize=(9, 4))
+    plt.hist(values, bins=100)
+    plt.show()

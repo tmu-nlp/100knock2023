@@ -2,39 +2,22 @@
 27. 内部リンクの除去Permalink
 26の処理に加えて，テンプレートの値からMediaWikiの内部リンクマークアップを除去し，
 テキストに変換せよ（参考: マークアップ早見表）．
+
+**** みんなできないやつ 再考案件 ****
 '''
-import json
+
 import re
-
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
-
-def find_basic_info(content):
-    pattern = r'^\{\{基礎情報.*?$(.*?)^\}\}'
-    info = re.findall(pattern, content, re.MULTILINE + re.DOTALL)
-
-    pattern = r'^\|(.+?)\s*=\s*(.+?)(?:(?=\n\|)|(?=\n$))'
-    result = dict(re.findall(pattern, info[0], re.MULTILINE + re.DOTALL))
-    return result
+from knock21 import get_article, show_index
+from knock25 import find_basic_info
 
 def remove_markup(text):
     pattern = r'\'{2,5}'
     text = re.sub(pattern, '', text)
 
-    pattern = r'\[\[(?:[^|]*?\|)*?([^|]*?)*?\]\]'
+    pattern = r'\[\[(?:[^|]*?\|)??([^|]*?)\]\]'
     text = re.sub(pattern, r'\1', text)
 
     return text
-
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
 
 if __name__ == "__main__":
     country = input("Country Name = ")

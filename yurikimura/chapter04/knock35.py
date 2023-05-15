@@ -3,29 +3,28 @@
 文章中に出現する単語とその出現頻度を求め，出現頻度の高い順に並べよ．
 '''
 
-from collections import defaultdict
+import os
+from knock30 import token_mapping
 
-dic = dict([("surface", 0), ("base", 0), ("pos", 0), ("pos1", 0)])
-ans = []
+def word_count(tokens):
+    counts = {}
 
-with open("neko.txt.mecab", "r") as text:
-    for line in text:
-        if line != 'EOS\n':
-            line = line.replace('\t', ',').split(',')
-            if line[0] != '\n':
-                dic["surface"] = line[0]
-                dic["base"] = line[7]
-                dic["pos"] = line[1]
-                dic["pos1"] = line[2]
-                if line[0] != '':
-                    ans.append(dic.copy())
+    for data in tokens:
+        if data["surface"] in counts.keys():
+            counts[data["surface"]] += 1
+        else:
+            counts[data["surface"]] = 1
 
-fre = defaultdict(lambda: 0)
+    return counts
 
-for data in ans:
-    if data["pos"] != "記号":
-        fre[data["surface"]] += 1
+def pick_value(x):
+    return x[1]
 
-fre = sorted(fre.items(), key=lambda x: x[1], reverse=True)
+neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
+tokens = token_mapping(neko_mecab)
+ans = word_count(tokens)
+ans = sorted(ans.items(), key=pick_value, reverse=True)
+print(ans)
 
-print(fre)
+# [('の', 9194), ('て', 6868), ('は', 6420), ('に', 6243),
+# ('を', 6071), ('と', 5508), ('が', 5337), ('た', 3988), ...
