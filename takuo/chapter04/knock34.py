@@ -12,7 +12,7 @@ for line_idx in range(len(mecabed)):
             count += 1
 
         elif (tmpstr != ""):
-            if (count > 1):
+            if (count > 8):
                 print(tmpstr, count)
             tmpstr = ""
             count = 0
