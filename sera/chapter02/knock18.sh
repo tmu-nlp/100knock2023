@@ -1,1 +1,0 @@
-cat popular-names.txt | sort -rnk 3 > bash18.txt
