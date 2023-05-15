@@ -8,18 +8,20 @@ with open(filename, "r") as input_file:
     for line in input_file:
         # Split the line by tab characters to get the columns
         columns = line.strip().split("\t")
-        
-            # Get the part of speech tag from columns
-        surface = columns[0]
+              # If the line has at least two columns
+        if len(columns) >= 2:
+        # Get the part of speech tag from columns
+            surface = columns[0]
 
-        pos = columns[1].split(",")[0],
-        pos1 = columns[1].split(",")[1],
-        base = columns[1].split(",")[2]
+            pos = columns[1].split(',')[0]
+            pos1 = columns[1].split(',')[1]
+            base = columns[1].split(',')[5]
         
-        inform = {'surface':surface,
-                  'base' : base,
-                  'pos' : pos,
-                  'pos1' : pos1
-                  }
-        mecab_dictionary.append(inform)
-print(mecab_dictionary)
+            inform = {'surface':surface,
+                      'base' : base,
+                      'pos' : pos,
+                     'pos1' : pos1
+                      }
+            mecab_dictionary.append(inform)
+            
+    print(mecab_dictionary)
