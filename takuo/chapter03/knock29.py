@@ -1,4 +1,4 @@
-
+import requests
 import re
 
 
@@ -41,4 +41,8 @@ with open("chapter03/uk_text.txt", 'r') as uktxt:
     for key in baseinfo.keys():
         baseinfo[key] = getEssence(baseinfo[key])
     flag_file = baseinfo["国旗画像"]
-    print(flag_file.replace(' ','_'))
+    url = 'https://commons.wikimedia.org/w/api.php?action=query&titles=File:' + \
+        flag_file + '&prop=imageinfo&iiprop=url&format=json'
+    data = requests.get(url)
+    flag_url = re.search(r'"url":"(.+?)"', data.text).group(1)
+    print(flag_url)
