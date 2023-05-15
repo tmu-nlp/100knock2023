@@ -23,15 +23,6 @@ def getBaseInfo(fileobj):
             info_dict[keyval[0]] = keyval[1]
     return info_dict
 
-# def remove_markup(text):
-#     pattern = r'\'{2,5}'
-#     text = re.sub(pattern, '', text)
-
-#     pattern = r'\[\[(?:[^|]*?\|)*?([^|]*?)*?\]\]' # <-ここすげえ，(|以外の文字+|)が最小個 + (|以外の文字)でグループ作って，\1で1番目のグループを参照している，スゲー！！！
-#     text = re.sub(pattern, r'\1', text)
-
-#     return text
-
 
 with open("chapter03/uk_text.txt", 'r') as uktxt:
     baseinfo = getBaseInfo(uktxt)
@@ -42,3 +33,5 @@ with open("chapter03/uk_text.txt", 'r') as uktxt:
         baseinfo[key] = rmed_str
 
     print(baseinfo)  # 確立形態3とか
+
+

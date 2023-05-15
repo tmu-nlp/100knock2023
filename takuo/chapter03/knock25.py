@@ -26,3 +26,4 @@ def getBaseInfo(fileobj):
 
 with open("chapter03/uk_text.txt", 'r') as uktxt:
     baseinfo = getBaseInfo(uktxt)
+    print(baseinfo)
