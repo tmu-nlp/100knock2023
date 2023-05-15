@@ -1,4 +1,4 @@
-filename = "/home/nevucide/komachi_lab/100knock2023/song/chapter04/neko.txt.mecab"
+filename = "/home/nevucide/komachi_lab/100knock2023/song/chapter04/neko_noen.txt.mecab"
 
 sentence = []
 
@@ -40,8 +40,11 @@ def extract_longest_noun_phrase(sentence):
     if len(noun_phrase) > len(longest_noun_phrase):
         longest_noun_phrase = noun_phrase
 
+    print(longest_noun_phrase)
+    
+
     return longest_noun_phrase
 
-print(extract_longest_noun_phrase(sentence))
+extract_longest_noun_phrase(sentence)
 
 
