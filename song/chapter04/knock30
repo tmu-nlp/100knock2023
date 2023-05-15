@@ -24,4 +24,4 @@ with open(filename, "r") as input_file:
                       }
             mecab_dictionary.append(inform)
             
-    print(mecab_dictionary)
+            print(mecab_dictionary)
