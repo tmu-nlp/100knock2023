@@ -7,7 +7,11 @@ mecabed = get_mecabed_list("chapter04/neko.txt.mecab")
 
 words_with_neko = {}
 for line in mecabed:
-    surfs = [dic["base"] for dic in line]
+    surfs=[]
+    for dic in line:
+        if (dic["pos"] == "特殊"):
+            continue
+        surfs.append(dic["base"])
     if ('猫' not in surfs):
         continue  # ループの先頭に戻る
     for word in surfs:
@@ -23,4 +27,4 @@ counts = [tup[1] for tup in words_with_neko_sorted[0:10]]
 
 barplt = pyplot.bar(words, counts)
 pyplot.bar_label(barplt, label_type="edge")
-pyplot.savefig("chapter04/out_knock37.png")
+pyplot.savefig("chapter04/out_knock37_.png")
