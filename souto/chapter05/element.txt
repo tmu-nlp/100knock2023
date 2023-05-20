@@ -1,0 +1,3 @@
+import CaboCha
+cabocha = CaboCha.Parser('--charset=UTF8')
+
