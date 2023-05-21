@@ -1,8 +1,8 @@
 import CaboCha
 
 # Set the input and output file paths
-input_file = "ai.ja.txt"
-output_file = "ai.ja.txt.parsed"
+input_file = "./song/chapter05/ai.ja.txt"
+output_file = "./song/chapter05/ai.ja.txt.parsed"
 
 # Initialize CaboCha parser
 cabocha_parser = CaboCha.Parser()
