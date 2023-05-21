@@ -31,13 +31,11 @@ for i in range(len(chunk_list)):
         for a in adjacency_list[j]:
             if a != j:
                 adjacency_list2[a] = j
-    #print(adjacency_list2)
+    print(adjacency_list2)
+    ANS = []
+    f = 0
     for j in range(len(adjacency_list2)):
-        if "名詞" in list(map(pos_map, L2[j].morphs)):
-
-            try:
-                saiki(j)
-            except:
-                print("")
-                continue
-    
+        if adjacency_list2[j] != None:
+            if "名詞" in list(map(pos_map, L2[adjacency_list2[j]].morphs)):
+                f = 1
+            if f

@@ -14,8 +14,8 @@ class Chunk:
     """
     def __init__(self):
         self.morphs = []
-        self.dst = []
-        self.srcs = []
+        self.dst = [] # 係先
+        self.srcs = [] # 係元
     def readChunk(self, clause) -> object:
         """
         文節のリストclauseを受け取りobjectを返す

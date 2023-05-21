@@ -3,6 +3,7 @@ import re
 
 chunk_list = knock41.read_text_chunk()
 
+#この辺のはクラス内に実装した方が良かったかも
 def pos_map(B):
     return B.pos
 def base_map(B):
