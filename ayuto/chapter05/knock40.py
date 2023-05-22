@@ -43,7 +43,7 @@ def read_text_morph() -> list:
                 morph_object_list_list.append(morph_object_list)
                 morph_object_list = []
         # この辺りの処理はreadMorphにさせるべきか否か?
-        elif(word[0]==r"*"): # raw文字列にしないと"*"はワイルドカードとして受け取られてしまう
+        elif(word[0]==r"*"):
             continue
         else:
             m = Morph()
