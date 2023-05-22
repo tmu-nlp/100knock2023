@@ -39,3 +39,4 @@ for i in range(len(chunk_list)):
             if "名詞" in list(map(pos_map, L2[adjacency_list2[j]].morphs)):
                 f = 1
             if f
+            # 沼ってます

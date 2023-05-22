@@ -25,7 +25,7 @@ class Morph:
         #print(splited_word)
         if len(splited_word) == 10:
             self.surface, self.pos, self.pos1, _, _, _ ,_, self.base, _ , _  = splited_word
-        else: # AIなどの場合
+        else: # AIなどのアルファベット場合
             self.surface, self.pos, self.pos1, _, _, _ ,_, self.base = splited_word
         return self
 
@@ -46,7 +46,7 @@ def read_text_morph() -> list:
         elif(word[0]==r"*"): # raw文字列にしないと"*"はワイルドカードとして受け取られてしまう
             continue
         else:
-            m = Morph() # インスタンス化 毎回インスタンス化しないとバグる
+            m = Morph()
             morph_object_list.append(m.readMorph(word))
     return morph_object_list_list
 
