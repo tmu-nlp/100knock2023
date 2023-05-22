@@ -12,7 +12,7 @@ def knock30():
     try:
         while 1:
             S = input()
-
+            
             #print(S)
             if S == "EOS":
                 if Dlist != []:
@@ -21,7 +21,7 @@ def knock30():
             elif("記号" in S or S == ""): # 空白記号が入った時にバグるので仕方なく記号を除去
                 continue
             else:
-                word = list(re.split("[\s,]", S))
+                word = list(re.split(r"[\s,]", S))
                 D=dict()
                 D["surface"] = word[0]
                 D["base"] = word[7]
