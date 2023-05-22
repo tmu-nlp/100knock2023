@@ -16,6 +16,8 @@ def read_cabocha_file(file_path):
 
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
+            columns = line.split()
+            
             if line.startswith('EOS'):
                 if chunk:
                     sentence.append(chunk)
@@ -31,6 +33,14 @@ def read_cabocha_file(file_path):
 
                 chunk = Chunk([], int(elements[2][:-1]), [])
                 chunks.append(int(elements[1]))
+                
+                #src
+                count = 0
+                search_number = int(elements[2][:-1])
+                if int(columns[1]) == search_number:
+                    count += 1
+                chunk.srcs.append(count)
+                
             else:
                 elements = re.split('[\t,]', line)
                 if len(elements) == 10:
