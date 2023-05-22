@@ -3,43 +3,24 @@
 単語の出現頻度順位を横軸，その出現頻度を縦軸として，両対数グラフをプロットせよ．
 '''
 
+import os
 import matplotlib.pyplot as plt
-from collections import defaultdict
+import japanize_matplotlib # pip install japanese-matplotlib
+from knock30 import token_mapping
+from knock35 import word_count, pick_value
 
-dic = dict([("surface", 0), ("base", 0), ("pos", 0), ("pos1", 0)])
-ans = []
+if __name__ == "__main__":
+    neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
+    tokens = token_mapping(neko_mecab)
+    data = word_count(tokens)
+    data = sorted(data.items(), key=pick_value, reverse=True)
 
-with open("neko.txt.mecab", "r") as text:
-    for line in text:
-        if line != 'EOS\n':
-            line = line.replace('\t', ',').split(',')
-            if line[0] != '\n':
-                dic["surface"] = line[0]
-                dic["base"] = line[7]
-                dic["pos"] = line[1]
-                dic["pos1"] = line[2]
-                if line[0] != '':
-                    ans.append(dic.copy())
+    key = [i for i in range(1, len(data) + 1)]
+    values = [data[i][1] for i in range(len(data))]
 
-fre = defaultdict(lambda: 0)
+    plt.scatter(key, values)
 
-for data in ans:
-    if data["pos"] != "記号":
-        fre[data["surface"]] += 1
-
-fre = sorted(fre.items(), key=lambda x: x[1], reverse=True)
-
-key = [i for i in range(1, len(fre) + 1)]
-
-value = []
-for data in fre:
-    value.append(data[1])
-
-
-plt.figure(figsize=(8, 4))
-plt.scatter(key, value)
-
-ax = plt.gca()
-ax.set_yscale('log')
-ax.set_xscale('log')
-plt.show()
+    ax = plt.gca()
+    ax.set_yscale('log')
+    ax.set_xscale('log')
+    plt.show()

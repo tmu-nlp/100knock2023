@@ -54,7 +54,7 @@ for i in result:
     ansdict[key]=re.sub(r'<ref.*?$', '', val)
 
 url_file = ansdict['国旗画像'].replace(' ', '_')
-url = 'https://commons.wikimedia.org/w/api.php?action=query&titles=File:' + url_file + '&prop=imageinfo&iiprop=url&format=json'
+url = 'https://commons.wikimedia.org/w/api.php?action=query&titles=File:' + url_file + '&prop=imageinfo&iiprop=url&format=json' #質問：具体的にどこを見てこのurlを考案するのでしょうか
 data = requests.get(url)
-print(re.search(r'"url":"(.+?)"', data.text).group())
+print(re.search(r'"url":"(.+?)"', data.text).group(1))#group(1)で()内の文字列を持ってくる
 

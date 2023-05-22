@@ -7,5 +7,5 @@ import json
 with open("jawiki-country.json", "r") as my_file:
     for line in my_file:
         my_json = json.loads(line)
-        if my_json['title'] in "イギリス":
+        if my_json['title'] == "イギリス":
             print(my_json['text'])

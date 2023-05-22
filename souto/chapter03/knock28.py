@@ -49,7 +49,7 @@ for i in result:
     key=kari[0].strip('|')
     key=key.strip()
     val=kari[1].strip()
-    ansdict[key]=re.sub(r'<ref.*?$', '', val)
+    ansdict[key]=re.sub(r'<ref.*?$', '', val)#整形
 
 for k, v in ansdict.items():
     print(k + ': ' + v.strip('|'))

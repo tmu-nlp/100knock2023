@@ -11,7 +11,7 @@ infobox_regex = r'{{Infobox country([\s\S]+?)}}'# Matches a string that starts w
 field_regex = r'\|\s*(.+?)\s*=\s*(.+?)\s*(?=\||$)'
 
 # Open the compressed JSON file
-with gzip.open(filename, 'rt') as file:
+with gzip.open(filename,'rt',encoding="UTF-8") as file:
     # Read each line and parse it as JSON
     for line in file:
         data = json.loads(line)
