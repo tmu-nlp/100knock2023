@@ -22,5 +22,9 @@ for sentence in chunks:
             if(i.pos=="動詞"):
                 f_verb=True
         if(f_verb and f_noum):
+          text=text.replace('、', '')
+          text=text.replace('。', '')
+          text=text.replace('「', '')
+          text=text.replace('」', '')
           print(text)
 

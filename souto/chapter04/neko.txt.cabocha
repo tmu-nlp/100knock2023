@@ -1,0 +1,1 @@
+morph.cpp(187) [charset() == decode_charset(dinfo->charset)] Incompatible charset: MeCab charset is euc-jp, Your charset is UTF8
