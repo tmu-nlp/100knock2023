@@ -6,7 +6,7 @@ mecabed = get_mecabed_list("chapter04/neko.txt.mecab")
 union_dict = {}
 for line in mecabed:
     for dic in line:
-        if (dic["pos"] == "特殊"):
+        if (dic["pos"] == "記号"):
             continue
         if(dic["base"]=='*'): #{'surface': '仙', 'base': '*', 'pos': '名詞', 'pos1': '人名'},{'surface': '六十', 'base': '*', 'pos': '名詞', 'pos1': '数詞'}
             dict_key=dic["surface"]

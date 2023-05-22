@@ -17,7 +17,7 @@ def get_mecabed_list(mecabed_text_path: str) -> list:
         for line in lines:  # 形態素辞書構築
             tmpdict = {"surface": "", "base": "", "pos": "", "pos1": ""}  # 形態素
             tmpdict["surface"] = line[0]
-            tmpdict["base"] = line[5]
+            tmpdict["base"] = line[7]
             tmpdict["pos"] = line[1]
             tmpdict["pos1"] = line[2]
 

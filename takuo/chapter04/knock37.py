@@ -9,7 +9,7 @@ words_with_neko = {}
 for line in mecabed:
     surfs=[]
     for dic in line:
-        if (dic["pos"] == "特殊"):
+        if (dic["pos"] == "記号"):
             continue
         surfs.append(dic["base"])
     if ('猫' not in surfs):
