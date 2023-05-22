@@ -47,6 +47,12 @@ class Chunk():
         puncts_pattern = re.compile(r'[。、「」『』（）〈〉]*')
         surface = self.surface()
         return re.sub(puncts_pattern, '', surface)
+    
+    def morphs_poss(self):
+        poss=[]
+        for morph in self.morphs:
+            poss.append(morph.pos)
+        return poss
 
     def __str__(self):
 
