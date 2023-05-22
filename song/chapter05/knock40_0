@@ -1,0 +1,19 @@
+import CaboCha
+
+# Set the input and output file paths
+input_file = "./song/chapter05/ai.ja.txt"
+output_file = "./song/chapter05/ai.ja.txt.parsed"
+
+# Initialize CaboCha parser
+cabocha_parser = CaboCha.Parser()
+
+# Read input file
+with open(input_file, "r", encoding="utf-8") as file:
+    text = file.read()
+
+# Parse the text using CaboCha
+tree = cabocha_parser.parse(text)
+
+# Save the parsed result to output file
+with open(output_file, "w", encoding="utf-8") as file:
+    file.write(tree.toString(CaboCha.FORMAT_LATTICE))
