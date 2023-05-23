@@ -14,7 +14,7 @@ for i in range(len(chunk_list)):
     D = dict()
     for j in range(len(L1)):
         D[j] = int(L1[j][1][0][:-1])
-    
+
     for d in D:
         joshi_list = []
         dousi = None

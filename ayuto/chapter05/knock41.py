@@ -25,7 +25,7 @@ class Chunk:
         self.dst.append(dst_seed) # 1文節には係先と係元1つしかないくない?
         self.srcs.append(srcs_seed)
         for word in clause[1:]:
-            #print("word", word)
+            # print("word", word)
             m = Morph()
             self.morphs.append(m.readMorph(word))
         return self
@@ -59,7 +59,7 @@ def read_text_chunk():
             clause.append(line)
         last_read_line = line
 
-#出力
+# 出力
 def surface_map(B):
     return(B.surface)
 if __name__ == "__main__":
