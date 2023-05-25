@@ -1,14 +1,4 @@
-'''
-41. 係り受け解析結果の読み込み（文節・係り受け）Permalink
-40に加えて，文節を表すクラスChunkを実装せよ．
-このクラスは形態素（Morphオブジェクト）のリスト（morphs），
-係り先文節インデックス番号（dst），係り元文節インデックス番号のリスト（srcs）を
-メンバ変数に持つこととする．さらに，入力テキストの係り受け解析結果を読み込み，
-１文をChunkオブジェクトのリストとして表現し，冒頭の説明文の文節の文字列と係り先を表示せよ．
-本章の残りの問題では，ここで作ったプログラムを活用せよ．
-'''
 from io import TextIOWrapper
-import os
 
 class Morph():
     def __init__(self, line:str):
@@ -29,7 +19,7 @@ class Chunk():
     １文節を形態素のリストとして表現する(morphs)
     係り先のindexをdst、係り元のindexの集まりをsrcsで表現する
     '''
-    def __init__(self, morphs:list(), dst:int):
+    def __init__(self, morphs, dst):
         self.morphs = morphs
         self.dst = dst # 係り先
         self.srcs = [] # 係り元
@@ -78,11 +68,3 @@ def k41(fname:TextIOWrapper):
                 dst = None
 
     return sentences # Sentenceオブジェクト
-
-
-if __name__ == "__main__":
-    filepath = os.path.join(os.path.dirname(__file__), "ai.ja.txt.parsed")
-    sentences = k41(filepath)
-
-    for c in sentences[2].chunks:
-        print(c)
