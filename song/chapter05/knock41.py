@@ -2,6 +2,8 @@ from knock40 import Morph
 
 import re
 
+file_path = './song/chapter05/ai.ja.txt.parsed'  # Replace with the path to your CaboCha file
+
 class Chunk:
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
@@ -20,16 +22,14 @@ def listing_src(file_path):
                 list_of_src.append(columns[2][:-1])     
         return list_of_src
 
-file_path = './song/chapter05/ai.ja.txt.parsed'  # Replace with the path to your CaboCha file
-
-list_srcs = listing_src(file_path)
 
 def read_cabocha_file(file_path):
     sentences = []
     sentence = []
     chunks = []
     chunk = None
-
+    list_srcs = listing_src(file_path)
+    
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             
@@ -49,8 +49,9 @@ def read_cabocha_file(file_path):
                 chunk = Chunk([], int(elements[2][:-1]), [])
                 chunks.append(int(elements[1]))
                 
-
-                chunk.srcs.append(list_srcs.count(elements[1]))
+                rest_list = list(filter(lambda x: list_srcs[x] == elements[1], range(len(list_srcs))))
+                
+                chunk.srcs.extend(rest_list)
                 
                 
             else:
@@ -70,11 +71,8 @@ output_file = './song/chapter05/knock41.txt'
 
 sentences = read_cabocha_file(file_path)
 
-'''
-for chunk in sentences[2]:
-    print(f'Chunk: {"".join([morph.surface for morph in chunk.morphs])}\tDst: {chunk.dst}\tSrcs: {chunk.srcs}')
-'''
 
 with open(output_file, "w", encoding="utf-8") as file:
     for chunk in sentences[0]:
-        file.write(str(f'Morphs: {" + ".join([morph.surface for morph in chunk.morphs])}\tDst: {chunk.dst}\tSrcs: {chunk.srcs}')+'\n')
+        file.write(f'Morphs: {"".join([morph.surface for morph in chunk.morphs])}\t Dst: {chunk.dst}\t Srcs: {chunk.srcs}'+'\n')
+ 
