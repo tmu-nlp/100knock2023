@@ -1,0 +1,21 @@
+from knock40 import Morph
+
+import re
+
+file_path = './song/chapter05/ai.ja.txt.parsed'                
+
+        
+def listing_src(file_path):
+    list_of_src = []
+    
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            
+            if line.startswith('*'):
+                columns = line.split()
+                list_of_src.append(columns[2][:-1])     
+        return list_of_src
+
+print(listing_src(file_path))
+
+

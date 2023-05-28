@@ -8,6 +8,22 @@ class Chunk:
         self.dst = dst
         self.srcs = srcs
 
+
+def listing_src(file_path):
+    list_of_src = []
+    
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            
+            if line.startswith('*'):
+                columns = line.split()
+                list_of_src.append(columns[2][:-1])     
+        return list_of_src
+
+file_path = './song/chapter05/ai.ja.txt.parsed'  # Replace with the path to your CaboCha file
+
+list_srcs = listing_src(file_path)
+
 def read_cabocha_file(file_path):
     sentences = []
     sentence = []
@@ -16,7 +32,6 @@ def read_cabocha_file(file_path):
 
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
-            columns = line.split()
             
             if line.startswith('EOS'):
                 if chunk:
@@ -34,12 +49,9 @@ def read_cabocha_file(file_path):
                 chunk = Chunk([], int(elements[2][:-1]), [])
                 chunks.append(int(elements[1]))
                 
-                #src
-                count = 0
-                search_number = int(elements[2][:-1])
-                if int(columns[1]) == search_number:
-                    count += 1
-                chunk.srcs.append(count)
+
+                chunk.srcs.append(list_srcs.count(elements[1]))
+                
                 
             else:
                 elements = re.split('[\t,]', line)
@@ -53,7 +65,6 @@ def read_cabocha_file(file_path):
 
     return sentences
 
-file_path = './song/chapter05/ai.ja.txt.parsed'  # Replace with the path to your CaboCha file
 
 output_file = './song/chapter05/knock41.txt'
 
