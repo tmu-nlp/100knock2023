@@ -92,4 +92,4 @@ def getChunksList_centence(morphed_line_list: list) -> list:
 if __name__ == "__main__":
     with open(f"{os.path.dirname(__file__)}/ai.ja.txt.parsed", "r") as parsed_file:
         chunked = getChunksList_centence(parsed_file.readlines())
-        print(chunked[1])
+        print(chunked[4])
