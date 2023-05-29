@@ -1,33 +1,14 @@
 import re
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+import string
+import pandas as pd
 
 
-def rm_punct(text: str) -> str:
-    '''remove ,.[]{}"'`!?():;'''
-    puncts = re.compile(r"[,.\[\]{}\"'`!?\(\):;]")
-    return re.sub(puncts,  '', text)
-
-
-def get_words_list(sentence: str) -> list:
-    worded = re.split(r"[\t \n]", sentence)
-    lowered = []
-    for w in worded:
-        tmpstr = rm_punct(w)
-        tmpstr = tmpstr.lower()
-        lowered.append(tmpstr)
-    return lowered[1:-1]
-
-
-def gen_features_txt(input_filepath: str, output_filepath: str):
-    worded = []
-    with open(f"{input_filepath}", 'r') as rawfile:
-        for l in rawfile.readlines():
-            worded.append(get_words_list(l))
-
-    with open(f"{output_filepath}", 'w') as out:
-        for data in worded:
-            stred = ' '.join(data)
-            out.write(stred+'\n')
+def preprocess(txt):
+    '''英字とスペース以外(記号，数字など)を削除，小文字化'''
+    subed = re.sub(r"[^ a-zA-Z]+", '', txt)
+    return subed.lower()
 
 
 trainfile = os.path.dirname(__file__)+"/train.txt"
@@ -36,6 +17,58 @@ validfile = os.path.dirname(__file__)+"/valid.txt"
 valid_feat = os.path.dirname(__file__)+"/valid.feature.txt"
 testfile = os.path.dirname(__file__)+"/test.txt"
 test_feat = os.path.dirname(__file__)+"/test.feature.txt"
-gen_features_txt(trainfile, train_feat)
-gen_features_txt(validfile, valid_feat)
-gen_features_txt(testfile, test_feat)
+
+
+title_union = []  # title全まとめ
+class_train = []  # ラベル格納リスト
+class_valid = []
+class_test = []
+valid_count = 0
+train_count = 0
+with open(validfile, 'r') as f:
+    print(f"readnig:{validfile}.")
+    lines = f.readlines()
+    valid_count = len(lines)
+    for line in lines:
+        splted = line.split('\t')
+        title_union.append(preprocess(splted[1]))
+        class_valid.append(ord(splted[0]))
+with open(trainfile, 'r') as f:
+    print(f"readnig:{trainfile}.")
+    lines = f.readlines()
+    train_count = len(lines)
+    for line in lines:
+        splted = line.split('\t')
+        title_union.append(preprocess(splted[1]))
+        class_train.append(ord(splted[0]))
+
+
+# testは含めない．後々学習用データをもとにしたvectornizerでベクトル化する．
+title_test = []
+with open(testfile, 'r') as f:
+    print(f"readnig:{testfile}.")
+    for line in f.readlines():
+        splted = line.split('\t')
+        title_test.append(preprocess(splted[1]))
+        class_test.append(ord(splted[0]))
+
+
+vectornizer = TfidfVectorizer()
+title_wordvec_union = vectornizer.fit_transform(title_union).toarray()
+title_wordvec_valid = title_wordvec_union[:valid_count]
+title_wordvec_train = title_wordvec_union[valid_count:]
+title_wordvec_test = vectornizer.transform(title_test).toarray()
+
+if __name__=="__main__":
+    with open(train_feat, 'w') as out:
+        for idx in range(len(title_wordvec_train)):
+            float_stred = [str(float(item)) for item in title_wordvec_train[idx]]
+            out.write(str(class_train[idx])+'\t'+','.join(float_stred)+'\n')
+    with open(valid_feat, 'w') as out:
+        for idx in range(len(title_wordvec_valid)):
+            float_stred = [str(float(item)) for item in title_wordvec_valid[idx]]
+            out.write(str(class_valid[idx])+'\t'+','.join(float_stred)+'\n')
+    with open(test_feat, 'w') as out:
+        for idx in range(len(title_wordvec_test)):
+            float_stred = [str(float(item)) for item in title_wordvec_test[idx]]
+            out.write(str(class_test[idx])+'\t'+','.join(float_stred)+'\n')
