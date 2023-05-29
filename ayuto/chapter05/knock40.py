@@ -1,7 +1,6 @@
 import re
 import io
 import sys
-import re
 
 #入力を標準入力で読む wsl環境じゃないと動かない(なんで?)
 with open("ai.ja.txt.parsed", "r") as f:
@@ -46,7 +45,7 @@ def read_text_morph() -> list:
         elif(word[0]==r"*"):
             continue
         else:
-            m = Morph()
+            m = Morph() # インスタンス化
             morph_object_list.append(m.readMorph(word))
     return morph_object_list_list
 
