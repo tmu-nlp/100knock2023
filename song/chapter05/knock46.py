@@ -26,7 +26,7 @@ def app_sentence_k46(filename):
         if len(morphs) > 0:
           chunks.append(Chunk(morphs, dst))
           morphs = []
-        dst = int(line.split(' ')[2].rstrip('D'))
+        dst = int(line.split(' ')[2][:-1])
       elif line != 'EOS\n':  # 文末以外：Morphを適用し形態素リストに追加
         morphs.append(Morph(line))
       else:  # 文末：直前の文節の情報にChunkを適用し文節リストに追加 + 文節リストにSentenceを適用し文リストに追加
@@ -56,5 +56,4 @@ def app_sentence_k46(filename):
   return
 
 app_sentence_k46(file_name)
-
 
