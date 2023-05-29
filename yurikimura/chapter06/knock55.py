@@ -1,13 +1,12 @@
 import pickle
 import pandas as pd
-#from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 
 if __name__ == "__main__":
-    X_train = pd.read_table("train.feature.txt", header=None)
-    Y_train = pd.read_table("train.txt", header=None)[1]
-    X_test = pd.read_table("test.feature.txt", header=None)
-    Y_test = pd.read_table("test.txt", header=None)[1]
+    X_train = pd.read_csv("train_features.csv")
+    Y_train = pd.read_csv("train.csv")["CATEGORY"]
+    X_test = pd.read_csv("test_features.csv")
+    Y_test = pd.read_csv("test.csv")["CATEGORY"]
 
     lr = pickle.load(open("model.pkl", "rb"))
 
@@ -26,18 +25,3 @@ if __name__ == "__main__":
     print(train_cm)
     print("評価データの混同行列")
     print(test_cm)
-"""
-訓練データの混同行列
-       pred_b  pred_t  pred_e  pred_m
-act_b    4420      34      55       2
-act_t     134     995     117       2
-act_e      15       2    4184       0
-act_m      85       3     128     508
-
-評価データの混同行列
-       pred_b  pred_t  pred_e  pred_m
-act_b     539       9      25       2
-act_t      29      93      16       0
-act_e       7       1     532       1
-act_m      16       2      17      47
-"""

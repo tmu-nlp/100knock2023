@@ -4,14 +4,13 @@
 '''
 import pickle
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 if __name__ == "__main__":
-    X_train = pd.read_table("train.feature.txt", header=None)
-    Y_train = pd.read_table("train.txt", header=None)[1]
-    X_test = pd.read_table("test.feature.txt", header=None)
-    Y_test = pd.read_table("test.txt", header=None)[1]
+    X_train = pd.read_csv("train_features.csv")
+    Y_train = pd.read_csv("train.csv")["CATEGORY"]
+    X_test = pd.read_csv("test_features.csv")
+    Y_test = pd.read_csv("test.csv")["CATEGORY"]
 
     lr = pickle.load(open("model.pkl", "rb"))
 
@@ -21,8 +20,3 @@ if __name__ == "__main__":
 
     print(f"学習データの正解率:{train_ac}")
     print(f"評価データの正解率:{test_ac}")
-
-"""
-学習データの正解率:0.9459940097341819
-評価データの正解率:0.906437125748503
-"""

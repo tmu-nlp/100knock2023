@@ -4,12 +4,10 @@
 '''
 import pickle
 import pandas as pd
-#from sklearn.linear_model import LogisticRegression
 
 if __name__ == "__main__":
-    #評価データ読み込み
-    X_test = pd.read_table("test.feature.txt", header=None) #各単語の特徴量
-    Y_test = pd.read_table("test.txt", header=None)[1]#分類の正解ラベル
+    X_test = pd.read_csv("test_features.csv") #各単語の特徴量
+    Y_test = pd.read_csv("test.csv")["CATEGORY"]#分類の正解ラベル
 
     #モデル読み込み
     lr = pickle.load(open("model.pkl", "rb"))#rb:バイナリの読み込み
@@ -26,10 +24,5 @@ if __name__ == "__main__":
         if Y_pred[i] == Y_test[i]:
             accuracy += 1
         y_proba = "{:.3f}".format(max(Y_proba[i]))#小数点以下三桁
-        #print(f"{i}\t{Y_pred[i]}\t{Y_test[i]}\t{y_proba}")
-
 
     print("accuracy:", float(accuracy/len(Y_test)))
-    """
-    結果-->accuracy: 0.906437125748503
-    """

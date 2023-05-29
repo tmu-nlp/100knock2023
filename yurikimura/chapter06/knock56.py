@@ -7,8 +7,8 @@ import pandas as pd
 from sklearn.metrics import precision_score, recall_score, f1_score
 
 if __name__ == "__main__":
-    X_test = pd.read_table("test.feature.txt", header=None)
-    Y_test = pd.read_table("test.txt", header=None)[1]
+    X_test = pd.read_csv("test_features.csv")
+    Y_test = pd.read_csv("test.csv")["CATEGORY"]
 
     lr = pickle.load(open("model.pkl", "rb"))
 
@@ -46,17 +46,3 @@ if __name__ == "__main__":
     print(f"適合率  :{precision_macro}\t{precision_micro}")
     print(f"再現率  :{recall_macro}\t{recall_micro}")
     print(f"F1スコア:{f1_macro}\t{f1_micro}")
-
-"""
-カテゴリ:b      t       e       m
-適合率  :0.912  0.886   0.902   0.902
-再現率  :0.937  0.674   0.983   0.983
-F1スコア:0.925  0.765   0.941   0.941
-
-        マクロ平均              マイクロ平均
-適合率  :0.9098556843368854     0.906437125748503
-再現率  :0.7919598050034988     0.906437125748503
-F1スコア:0.8357105004524219     0.906437125748503
-
-FN=FPでRecall=Precisionになったからマイクロ平均が全部同じになってる？
-"""
