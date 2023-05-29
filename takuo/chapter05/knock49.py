@@ -18,6 +18,8 @@ def show_path(paragraph:list[Chunk],a:Chunk,b:Chunk): # show path a -> b
     if(b in a_to_root):
         for node in a_to_root:
             
+            
+
 
 
 
