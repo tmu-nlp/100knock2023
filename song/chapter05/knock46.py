@@ -22,7 +22,7 @@ def app_sentence_k46(filename):
   morphs = []
   with open(filename, mode='r') as f:
     for line in f:
-      if line[0] == '*':  # 係り受け関係を表す行：直前の文節の情報にChunkを適用し文節リストに追加 + 直後の文節の係り先を取得
+      if line.startswith('*'):  # 係り受け関係を表す行：直前の文節の情報にChunkを適用し文節リストに追加 + 直後の文節の係り先を取得
         if len(morphs) > 0:
           chunks.append(Chunk(morphs, dst))
           morphs = []
