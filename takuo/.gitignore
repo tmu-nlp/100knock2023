@@ -8,3 +8,4 @@ neko.txt
 neko.txt.mecab
 
 chapter06/NewsAggregatorDataset
+chapter06/*.txt
