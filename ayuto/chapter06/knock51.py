@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -20,20 +19,3 @@ test_tfidf = test_feature.toarray()
 pd.DataFrame(data=train_tfidf).to_csv("train.feature.txt", sep="\t", index=False, header=None)
 pd.DataFrame(data=valid_tfidf).to_csv("valid.feature.txt", sep="\t", index=False, header=None)
 pd.DataFrame(data=test_tfidf).to_csv("test.feature.txt", sep="\t", index=False, header=None)
-=======
-import re
-code_regex = re.compile(r"[()\.[]{},]")
-S=[]
-with open(r"train.txt", "r", encoding="utf-8") as f:
-    while True:
-        try:
-            L= f.readline()
-            L = list(L.split("\t")[1].split(" "))
-            #print(L)
-            for l in L:
-                S.append(code_regex.sub("", l))
-        except:
-            break
-with open("train.feature.txt", "w", encoding="utf-8") as f:
-    f.write("\t".join(S))
->>>>>>> 5f0664506d2ef51f58972af79ad4b65e854542eb
