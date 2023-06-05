@@ -2,7 +2,7 @@ import pickle
 
 
 lr = pickle.load(open("model.pkl", "rb"))
-vocabulary = pickle.load(open("vocabulary.pkl", "rb"))
+vocabulary = pickle.load(open(r"vocabulary.pkl", "rb"))
 weights_dic = lr.coef_
 categories = ["business", "entertainment", "health", "science and technology"]
 
