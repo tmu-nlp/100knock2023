@@ -1,6 +1,6 @@
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
-from knock67 import target_countries
+from knock67 import vec, target_countries
 
 vec_embedded = TSNE(n_components=2).fit_transform(vec)
 vec_embedded_t = list(zip(*vec_embedded)) # 転置
