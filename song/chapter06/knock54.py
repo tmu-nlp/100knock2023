@@ -7,5 +7,7 @@ y_train_pred = clf.predict(X_train)
 y_test_pred = clf.predict(X_test)
 y_train = train_df['CATEGORY']
 y_test = test_df['CATEGORY']
+
+
 print (accuracy_score(y_train, y_train_pred))
 print (accuracy_score(y_test, y_test_pred))
