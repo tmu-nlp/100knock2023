@@ -14,7 +14,7 @@ class Sentence():
       if chunk.dst != -1:
         self.chunks[chunk.dst].srcs.append(i)
         
-file_name = './song/chapter05/ai.ja.txt.parsed'
+file_name = '/home/nevucide/100knock2023/song/chapter05/ai.ja.txt.parsed'
 
 def app_sentence_k46(filename):
   sentences = []
