@@ -17,7 +17,7 @@ f.close()
 
 
 
-pattern = r'(?:\[\[ファイル:)(.*?)\|'
+pattern = r'(?:\[\[ファイル:)(.*?)(?:\|)'
 result = '\n'.join(re.findall(pattern, text))
 print(result)
 

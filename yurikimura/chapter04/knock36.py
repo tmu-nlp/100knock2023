@@ -3,41 +3,35 @@
 出現頻度が高い10語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．
 '''
 
+import os
 import matplotlib.pyplot as plt
-from collections import defaultdict
+import japanize_matplotlib # pip install japanese-matplotlib
+from knock30 import token_mapping
+from knock35 import word_count, pick_value
 
-dic = dict([("surface", 0), ("base", 0), ("pos", 0), ("pos1", 0)])
-ans = []
+# def word_count(tokens):
+#     counts = {}
 
-with open("neko.txt.mecab", "r") as text:
-    for line in text:
-        if line != 'EOS\n':
-            line = line.replace('\t', ',').split(',')
-            if line[0] != '\n':
-                dic["surface"] = line[0]
-                dic["base"] = line[7]
-                dic["pos"] = line[1]
-                dic["pos1"] = line[2]
-                if line[0] != '':
-                    ans.append(dic.copy())
+#     for data in tokens:
+#         if data["surface"] in counts.keys():
+#             counts[data["surface"]] += 1
+#         else:
+#             counts[data["surface"]] = 1
 
-fre = defaultdict(lambda: 0)
+#     return counts
 
-for data in ans:
-    if data["pos"] != "記号":
-        fre[data["surface"]] += 1
+# def pick_value(x):
+#     return x[1]
 
-fre = sorted(fre.items(), key=lambda x: x[1], reverse=True)
+if __name__ == "__main__":
+    neko_mecab = os.path.join(os.path.dirname(__file__), "neko.txt.mecab")
+    tokens = token_mapping(neko_mecab)
+    data = word_count(tokens)
+    data = sorted(data.items(), key=pick_value, reverse=True)
 
-probability = []
-label = []
-for i in range(10):
-    label.append(fre[i][0])
-    probability.append(fre[i][1])
+    names = [data[i][0] for i in range(10)]
+    values = [data[i][1] for i in range(10)]
 
-print(label)
-print(probability)
-
-plt.figure(figsize=(9, 4))
-plt.bar(label, probability)
-plt.show()
+    plt.figure(figsize=(9, 4))
+    plt.bar(range(10), values, tick_label=names)
+    plt.show()

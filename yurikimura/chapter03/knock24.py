@@ -3,16 +3,8 @@
 記事から参照されているメディアファイルをすべて抜き出せ．
 '''
 
-import json
 import re
-
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
+from knock21 import get_article, show_index
 
 def find_medium(content):
     content_list = content.split('\n')
@@ -24,11 +16,6 @@ def find_medium(content):
             ans = "\n".join(ans)
     return ans
 
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
-
 if __name__ == "__main__":
     country = input("Country Name = ")
     articles = get_article('jawiki-country.json')
@@ -38,3 +25,7 @@ if __name__ == "__main__":
         for article in articles:
             if article['title'] == country:
                 print(find_medium(article['text']))
+
+# output
+# Country Name = イギリス
+# Wembley Stadium, illuminated.jpg

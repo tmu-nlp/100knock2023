@@ -15,7 +15,7 @@ for l in ls:
     se = re.search(p,l)
     if se:
         p2 = r'(\'{2,5})(.*?)(\1)'
-        p3 = r'\[\[(?:[^|]*?\|)??((?!Category:)([^|]*?))\]\]'
+        p3 = r'\[\[(?:[^|]*?\|)*?((?!Category:)([^|]*?))\]\]'
         p4 = r'\{\{lang(?:[^|]*?\|)*?([^|]*?)\}\}' #{{lang|言語タグ|文字列}}
         p5 = r'\[https?://(?:[^\s]*?\s)?([^]]*?)\]' #[https://www.example.org 表示文字], [https://www.example.org]
         p6 = r'<.+?>' #<tag>

@@ -3,34 +3,27 @@
 25の処理時に，テンプレートの値からMediaWikiの強調マークアップ
 （弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ
 '''
-import json
+
 import re
+from knock21 import get_article, show_index
+from knock25 import find_basic_info
 
-def get_article(src_json):
-    articles = []
-    with open(src_json, "r") as my_file:
-        for line in my_file:
-            my_json = json.loads(line)
-            articles.append(my_json)
-    return articles
+# def find_basic_info(content):
+#     '''
+#     マークダウンテキストの中から順序無しリストのグループを全件抽出したい場合は
+#     オプション re.MULTILINE と re.DOTALL を指定
+#     '''
+#     pattern = r'^\{\{基礎情報.*?$(.*?)^\}\}'
+#     info = re.findall(pattern, content, re.MULTILINE + re.DOTALL)
 
-def find_basic_info(content):
-    pattern = r'^\{\{基礎情報.*?$(.*?)^\}\}'
-    info = re.findall(pattern, content, re.MULTILINE + re.DOTALL)
-
-    pattern = r'^\|(.+?)\s*=\s*(.+?)(?:(?=\n\|)|(?=\n$))'
-    result = dict(re.findall(pattern, info[0], re.MULTILINE + re.DOTALL))
-    return result
+#     pattern = r'^\|(.+?)\s*=\s*(.+?)(?:(?=\n\|)|(?=\n$))'
+#     result = dict(re.findall(pattern, info[0], re.MULTILINE + re.DOTALL))
+#     return result
 
 def remove_markup(text):
-    pattern = r'\'{2,5}'
+    pattern = r'\'{2,5}' # 2〜5個の'
     text = re.sub(pattern, '', text)
     return text
-
-def show_index(articles):
-    index = [article['title'] for article in articles]
-    index.sort()
-    return index
 
 country = input("Country Name = ")
 articles = get_article('jawiki-country.json')
@@ -45,3 +38,6 @@ if __name__ == "__main__":
                 result = find_basic_info(article['text'])
                 removed = {k: remove_markup(v) for k, v in result.items()}
                 print(removed)
+
+# Country Name = イギリス
+# {'略名': 'イギリス', '日本語国名': 'グレートブリテン及び北アイルランド連合王国', '公...
