@@ -1,5 +1,5 @@
 from knock40 import Morph, morph
-
+'''
 class Chunk():
   def __init__(self, morphs, dst):
     self.morphs = morphs
@@ -34,7 +34,8 @@ def app_sentence_k46(filename):
         sentences.append(Sentence(chunks))
         morphs = []
         chunks = []
-        dst = None       
+        dst = None      
+        '''
   
   with open('./song/chapter05/ans46.txt', 'w') as f:
     for sentence in sentences:
@@ -47,7 +48,7 @@ def app_sentence_k46(filename):
               case = [morph.surface for morph in sentence.chunks[src].morphs if morph.pos == '助詞']
               if len(case) > 0:  # 助詞を含むchunkの場合は助詞と項を取得
                 cases = cases + case
-                modi_chunks.append(''.join(morph.surface for morph in sentence.chunks[src].morphs if morph.pos != '記号'))
+                modi_chunks.append(''.join(morph.surface for morph in sentence.chunks[src].morphs if morph.pos != '記号'))#記号以外のものall append
             if len(cases) > 0:  # 助詞が1つ以上見つかった場合は重複除去後辞書順にソートし、項と合わせて出力
               cases = sorted(list(set(cases)))
               line = '{}\t{}\t{}'.format(morph.base, ' '.join(cases), ' '.join(modi_chunks))
