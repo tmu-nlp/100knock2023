@@ -16,7 +16,7 @@ class Sentence():
         
 file_name = './song/chapter05/ai.ja.txt.parsed'
 
-def app_sentence_k46(filename):
+def app_sentence_k48(filename):
   sentences = []
   chunks = []
   morphs = []
@@ -36,24 +36,15 @@ def app_sentence_k46(filename):
         chunks = []
         dst = None       
   
-  with open('./song/chapter05/ans46.txt', 'w') as f:
-    for sentence in sentences:
-      for chunk in sentence.chunks:
-        for morph in chunk.morphs:
-          if morph.pos == '動詞':  # chunkの左から順番に動詞を探す
-            cases = []
-            modi_chunks = []
-            for src in chunk.srcs:  # 見つけた動詞の係り元chunkから助詞を探す
-              case = [morph.surface for morph in sentence.chunks[src].morphs if morph.pos == '助詞']
-              if len(case) > 0:  # 助詞を含むchunkの場合は助詞と項を取得
-                cases = cases + case
-                modi_chunks.append(''.join(morph.surface for morph in sentence.chunks[src].morphs if morph.pos != '記号'))
-            if len(cases) > 0:  # 助詞が1つ以上見つかった場合は重複除去後辞書順にソートし、項と合わせて出力
-              cases = sorted(list(set(cases)))
-              line = '{}\t{}\t{}'.format(morph.base, ' '.join(cases), ' '.join(modi_chunks))
-            print(line, file=f)
-          break
+  sentence = sentences[0]
+  for chunk in sentence.chunks:
+    if '名詞' in [morph.pos for morph in chunk.morphs]:  # chunkが名詞を含むか確認
+      path = [''.join(morph.surface for morph in chunk.morphs if morph.pos != '記号')]
+      while chunk.dst != -1:  # 名詞を含むchunkを先頭に、dstを根まで順に辿ってリストに追加
+        path.append(''.join(morph.surface for morph in sentence.chunks[chunk.dst].morphs if morph.pos != '記号'))
+        chunk = sentence.chunks[chunk.dst]
+      print(' -> '.join(path))  
   return
 
-app_sentence_k46(file_name)
+app_sentence_k48(file_name)
 
