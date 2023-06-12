@@ -23,5 +23,5 @@ with open(filename, mode='r') as f:
       morphs = []
 
 
-# for m in sentences[2]:
-#   print(vars(m))
+for m in sentences[2]:
+  print(vars(m))

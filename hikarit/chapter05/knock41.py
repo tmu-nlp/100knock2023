@@ -41,6 +41,7 @@ with open(filename, mode='r') as f:
       sentences.append(Sentence(chunks))
       morphs = []
       chunks = []
+if __name__ == '__main__':
+  for chunk in sentences[2].chunks:
+    print([morph.surface for morph in chunk.morphs], chunk.dst, chunk.srcs)
 
-# for chunk in sentences[2].chunks:
-#   print([morph.surface for morph in chunk.morphs], chunk.dst, chunk.srcs)
