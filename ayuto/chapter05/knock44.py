@@ -14,4 +14,4 @@ for i in range(1):
         D[j] = int(L1[j][1][0][:-1])
     for d in D:
         dg.edge(code_regex.sub("", "".join(L1[d][0])), code_regex.sub("", "".join(L1[D[d]][0])))
-dg.render('./dgraph', view=True)
+dg.render('./dgraph' + str(i))

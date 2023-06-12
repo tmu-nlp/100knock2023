@@ -3,7 +3,7 @@ import knock41
 
 filename = 'knock45.txt'
 with open(filename, mode='w') as f:
-    sentences = knock41.sentences #sentencesというクラスのリストを持ってくる
+    sentences = knock41.sentences #sentencesというSentenceクラスのリストを持ってくる
     for sentence in sentences: 
         for chunk in sentence.chunks:
             for morph in chunk.morphs:
@@ -19,3 +19,6 @@ with open(filename, mode='w') as f:
                         f.write(line)
                         f.write('\n') #end = '\n'が　write()では使えない
                     break
+
+#!cat ./knock45.txt | sort | uniq -c | sort -nr
+#!cat ./knock45.txt | grep "行う" | sort | uniq -c | sort -nr
