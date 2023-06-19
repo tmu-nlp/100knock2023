@@ -12,5 +12,5 @@ with open('/content/drive/MyDrive/combined.csv', encoding='utf-8') as f:
 
 correlation, pvalue = spearmanr(human, w2v)
 
-print('スピアマン相関係数: {}'.format(correlation))
+print(f'スピアマン相関係数: {correlation}')
 '''
