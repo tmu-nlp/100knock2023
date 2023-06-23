@@ -22,7 +22,7 @@ cs = list(cs)
 
 cs_v = [model[country] for country in cs]
 
-kmeans = KMeans(n_clusters=5)
+kmeans = KMeans(n_clusters=5, n_init=10)
 kmeans.fit(cs_v)
 for i in range(5):
     cluster = np.where(kmeans.labels_ == i)[0]
