@@ -6,55 +6,57 @@
 ID番号の列を返す関数を実装せよ．
 ただし，出現頻度が2回未満の単語のID番号はすべて0とせよ．
 '''
+
+# Colab
+# https://colab.research.google.com/drive/1CDF6ds6FzLyrZvsEMQ05PYMHRIY5Evgz?usp=sharing
+
+
 from collections import defaultdict
+import string
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
-def count_word(data):
-    """単語の頻度をカウントして頻度順にソート"""
-    word_cnt = defaultdict(lambda:0)
-    for text in data:
-        for word in text.strip().split():
-            word_cnt[word] += 1
-    word_cnt = sorted(word_cnt.items(), key=lambda x:x[1], reverse=True)
-    #("word","cnt"),...
-    return word_cnt
+def make_train_valid_test(df):
+    # データの分割
+    train, valid_test = train_test_split(df, test_size=0.2, shuffle=True, random_state=123, stratify=df['CATEGORY'])
+    valid, test = train_test_split(valid_test, test_size=0.5, shuffle=True, random_state=123, stratify=valid_test['CATEGORY'])
+    train.reset_index(drop=True, inplace=True)
+    valid.reset_index(drop=True, inplace=True)
+    test.reset_index(drop=True, inplace=True)
 
-def word2id(word_cnt):
-    """単語ID辞書を生成"""
-    word2id_dic = {}
-    for i, (word, cnt) in enumerate(word_cnt):
-        if cnt < 2:#出現頻度2回以上の単語のみ辞書に追加
-            continue
-        word2id_dic[word] = i+1#頻度1番目に1，2番目に2,...
-    return word2id_dic
+    return train, valid, test
 
-def tokenizer(text, word2id_dic, unk=0):
-    """タイトルをtokenizeしてid列を返す"""
-    ids = []
-    for word in text.strip().split():
-        ids.append(word2id_dic.get(word, unk))
-    return ids
+def make_word2id_dictionary(text_list):
+    # 単語の頻度集計
+    d = defaultdict(int)
+    table = str.maketrans(string.punctuation, ' '*len(string.punctuation))  # 記号をスペースに置換するテーブル
+    for text in text_list:
+        for word in text.translate(table).split():
+            d[word] += 1
+    d = sorted(d.items(), key=lambda x:x[1], reverse=True)
 
-if __name__ == "__main__":
-    #knock50で作成したデータを読み込む
-    train = pd.read_csv("../chapter06/train.txt", header=None, sep="\t")
-    valid = pd.read_csv("../chapter06/valid.txt", header=None, sep="\t")
-    test = pd.read_csv("../chapter06/test.txt", header=None, sep="\t")
+    # 頻度から単語ID辞書の作成
+    word2id = {word: i + 1 for i, (word, cnt) in enumerate(d) if cnt > 1}  # 出現頻度が2回以上の単語を登録
+    return word2id
 
-    colums_name = ["TITLE", "CATEGORY"]
-    train.columns = colums_name
-    valid.columns = colums_name
-    test.columns = colums_name
+def tokenizer(text, word2id, unk=0):
+  """ 入力テキストをスペースで分割しID列に変換(辞書になければunkで指定した数字を設定)"""
+  table = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+  return [word2id.get(word, unk) for word in text.translate(table).split()]
 
-    word_cnt = count_word(train["TITLE"])
-    word2id_dic = word2id(word_cnt)
 
-    #結果を表示
-    text = train.iloc[0,train.columns.get_loc('TITLE')]
-    print(f"テキスト: {text}")
-    print(f"ID列: {tokenizer(text, word2id_dic)}")
+# csvの読み込み
+df = pd.read_csv('./newsCorpora.csv', header=None, sep='\t', quoting=3, names=['ID', 'TITLE', 'URL', 'PUBLISHER', 'CATEGORY', 'STORY', 'HOSTNAME', 'TIMESTAMP'])
 
-"""
-テキスト: Agnellis keen to support Fiat Chrysler going forward: Elkann
-ID列: [0, 4923, 1, 983, 1173, 1066, 1174, 0, 0]
-"""
+# データの抽出
+df = df.loc[df['PUBLISHER'].isin(['Reuters', 'Huffington Post', 'Businessweek', 'Contactmusic.com', 'Daily Mail']), ['TITLE', 'CATEGORY']]
+
+train, valid, test = make_train_valid_test(df)
+word2id = make_word2id_dictionary(train['TITLE'])
+
+# 確認
+text = train.iloc[1, train.columns.get_loc('TITLE')]
+id_list = tokenizer(text, word2id)
+
+print(f'テキスト: {text}')
+print(f'ID列: {id_list}')
