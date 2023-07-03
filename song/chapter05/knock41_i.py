@@ -1,4 +1,4 @@
-from knock40_i import Morph
+from knock40 import Morph
 
 import re
 

@@ -9,3 +9,7 @@ neko.txt.mecab
 
 chapter06/NewsAggregatorDataset
 chapter06/*.txt
+
+chapter07/GoogleNews*
+chapter07/wordvec*
+chapter07/questions-*

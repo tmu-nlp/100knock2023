@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from knock30 import k30
+plt.rcParams['font.family'] = 'MS Gothic'
 
 cnt = {}
 for dl in k30():
