@@ -3,128 +3,94 @@
 問題82のコードを改変し，B事例ごとに損失・勾配を計算して学習を行えるようにせよ
 （Bの値は適当に選べ）．また，GPU上で学習を実行せよ．
 '''
-import numpy as np
-import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+
+# Colab
+# https://colab.research.google.com/drive/1CDF6ds6FzLyrZvsEMQ05PYMHRIY5Evgz?usp=sharing
+
 import torch
-from torch.utils.data import TensorDataset, DataLoader
+from torch import nn
+from torch import cuda
 
-#データを読み込む
-train = pd.read_csv('../chapter06/train.txt', header=None, sep='\t')
-valid = pd.read_csv('../chapter06/valid.txt', header=None, sep='\t')
-test = pd.read_csv('../chapter06/test.txt', header=None, sep='\t')
+import pandas as pd
 
-#単語をidに変換して辞書作成
-#ref:https://stmind.hatenablog.com/entry/2020/07/04/173131
-vectorizer = CountVectorizer(min_df=2) #CountVectorizerのインスタンス生成
-train_title = train.iloc[:,0].str.lower() #小文字化してタイトルのみを抽出
-cnt = vectorizer.fit_transform(train_title).toarray() #各単語出現頻度を各文ごとにカウントして2次元配列を返す
-sm = cnt.sum(axis=0) #sumで単語ごとのカウント(1次元配列)を得る
-idx = np.argsort(sm)[::-1] #単語カウント配列を頻度順にソートして降順で取得
-words = np.array(vectorizer.get_feature_names())[idx] #頻度順の単語リスト
+from knock80 import make_word2id_dictionary, make_train_valid_test, tokenizer
+from knock81 import RNN, CreateDataset
+from knock82 import train_model, visualize_logs, calculate_loss_and_accuracy
 
-d = dict() #単語id辞書
-for i in range(len(words)):
-  d[words[i]] = i+1 #d[word] = id(1スタート)
 
-#各文の単語をidに変換してidリストを返す
-def get_id(sentence):
-    r = []
-    for word in sentence:
-        r.append(d.get(word,0))#単語辞書からそのwordのidを取得．ない場合は0を返す
-    return r
+class Padsequence():
+  """Dataloaderからミニバッチを取り出すごとに最大系列長でパディング"""
+  def __init__(self, padding_idx):
+    self.padding_idx = padding_idx
 
-#Dataframeから各文ごとにidリストになっているリストを返す
-def df2id(df):
-    ids = []
-    for i in df.iloc[:,0].str.lower():
-        ids.append(get_id(i.split()))
-    return ids
+  def __call__(self, batch):
+    sorted_batch = sorted(batch, key=lambda x: x['inputs'].shape[0], reverse=True)
+    sequences = [x['inputs'] for x in sorted_batch]
+    sequences_padded = torch.nn.utils.rnn.pad_sequence(sequences, batch_first=True, padding_value=self.padding_idx)
+    labels = torch.LongTensor([x['labels'] for x in sorted_batch])
 
-#ハイパラ設定
-max_len = 10
-dw = 300 #埋め込みの次元
-dh = 50 #隠れ層の次元
-n_vocab = len(words) + 1 #語彙サイズ
-PAD = len(words) #？？？語彙サイズより1少ないやつ
-epochs = 10
+    return {'inputs': sequences_padded, 'labels': labels}
 
-class RNN(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.emb = torch.nn.Embedding(n_vocab,dw,padding_idx=PAD)
-        self.rnn = torch.nn.RNN(dw,dh,batch_first=True)
-        self.linear = torch.nn.Linear(dh,4)#カテゴリ数=4
-        self.softmax = torch.nn.Softmax()
+##################
+# データの読み込みとword2id辞書の作成
+##################
 
-    def forward(self, x, h=None):
-        x = self.emb(x)#入力単語id列xの埋め込み
-        y, h = self.rnn(x, h)#予測ラベルyと次の隠れ状態
-        y = self.linear(y[:,-1,:])
-        return y
+# csvの読み込み
+df = pd.read_csv('./newsCorpora.csv', header=None, sep='\t', quoting=3, names=['ID', 'TITLE', 'URL', 'PUBLISHER', 'CATEGORY', 'STORY', 'HOSTNAME', 'TIMESTAMP'])
 
-#idリストをtensorに変換
-def list2tensor(data, max_len):
-    new = []
-    for d in data:
-        if len(d) > max_len:#max文長以上の時はmax_lenの系列長にする
-            d = d[:max_len]
-        else:#max文長以下の時はpaddingで埋めて系列長を揃える
-            d += [PAD] * (max_len - len(d))
-        new.append(d)
-    return torch.tensor(new, dtype=torch.int64)
+# データの抽出
+df = df.loc[df['PUBLISHER'].isin(['Reuters', 'Huffington Post', 'Businessweek', 'Contactmusic.com', 'Daily Mail']), ['TITLE', 'CATEGORY']]
 
-#正解率を計算
-def accuracy(pred, label):
-    pred = np.argmax(pred.data.numpy(), axis=1)
-    label = label.data.numpy()
-    return (pred == label).mean()
+# train, test, validの分割
+train, valid, test = make_train_valid_test(df)
 
-#Dataframeの各要素をidリストに変換
-X_train = df2id(train)
-X_valid = df2id(valid)
-X_test = df2id(test)
+# ラベルベクトルの作成
+category_dict = {'b': 0, 't': 1, 'e':2, 'm':3}
+y_train = train['CATEGORY'].map(lambda x: category_dict[x]).values
+y_valid = valid['CATEGORY'].map(lambda x: category_dict[x]).values
+y_test = test['CATEGORY'].map(lambda x: category_dict[x]).values
 
-#idリストをtensorに変換
-X_train = list2tensor(X_train,max_len)
-X_valid = list2tensor(X_valid,max_len)
-X_test = list2tensor(X_test,max_len)
+word2id = make_word2id_dictionary(train['TITLE'])
 
-#chapter08で作成したラベルを読み込んでtensorに変換
-y_train = np.loadtxt('../chapter08/data/y_train.txt')
-y_train = torch.tensor(y_train, dtype=torch.int64)
-y_valid = np.loadtxt('../chapter08/data/y_valid.txt')
-y_valid = torch.tensor(y_valid, dtype=torch.int64)
-y_test = np.loadtxt('../chapter08/data/y_test.txt')
-y_test = torch.tensor(y_test, dtype=torch.int64)
+################
+# RNNによる学習
+################
 
-#モデルを定義
-model = RNN()
-#デバイスを指定
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.to(device)
+# パラメータの設定
+VOCAB_SIZE = len(set(word2id.values())) + 1  # 辞書のID数 + パディングID
+EMB_SIZE = 300
+PADDING_IDX = len(set(word2id.values()))
+OUTPUT_SIZE = 4
+HIDDEN_SIZE = 50
+LEARNING_RATE = 5e-2
+BATCH_SIZE = 32
+NUM_EPOCHS = 10
 
-ds = TensorDataset(X_train.to(device), y_train.to(device)) #入力と正解ラベルをセットにする
+# Datasetの作成
+dataset_train = CreateDataset(train['TITLE'], y_train, tokenizer)
+dataset_valid = CreateDataset(valid['TITLE'], y_valid, tokenizer)
+dataset_test = CreateDataset(test['TITLE'], y_test, tokenizer)
 
-#バッチサイズを適当に選ぶ．大きい方が効率は良いぽい.
-loader = DataLoader(ds, batch_size=128, shuffle=True) #datasetを読み出し，バッチサイズで一回に読み出す数を指定できる
-loss_fn = torch.nn.CrossEntropyLoss() #損失関数は交差エントロピー
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-1) #確率的勾配降下法を使用
+# モデルの定義
+model = RNN(VOCAB_SIZE, EMB_SIZE, PADDING_IDX, OUTPUT_SIZE, HIDDEN_SIZE)
 
-#モデルを学習
-#ref:https://ohke.hateblo.jp/entry/2019/12/07/230000
-for epoch in range(epochs):
-    for xx, yy in loader:
-        y_pred = model(xx) #予測
-        loss = loss_fn(y_pred, yy) #損失(誤差)を計算
-        optimizer.zero_grad() #勾配をゼロクリアして初期化
-        loss.backward() #誤差を逆伝播(このメソッドは勾配が蓄積される)
-        optimizer.step() #パラメータを更新
-    with torch.no_grad():
-        y_pred = model(X_train.to(device))
-        loss = loss_fn(y_pred, y_train.to(device))
-        print("epoch: {}".format(epoch))
-        print("train loss: {}, train acc: {}".format(loss.item(), accuracy(y_pred,y_train)))
-        y_pred = model(X_valid.to(device))
-        loss = loss_fn(y_pred, y_valid.to(device))
-        print("valid loss: {}, valid acc: {}".format(loss.item(), accuracy(y_pred,y_valid)))
+# 損失関数の定義
+criterion = nn.CrossEntropyLoss()
+
+# オプティマイザの定義
+optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
+
+# デバイスの指定
+device = 'cuda' if cuda.is_available() else 'cpu'
+
+# モデルの学習
+log = train_model(dataset_train, dataset_valid, BATCH_SIZE, model, criterion, optimizer, NUM_EPOCHS, collate_fn=Padsequence(PADDING_IDX), device=device)
+
+# ログの可視化
+visualize_logs(log)
+
+# 正解率の算出
+_, acc_train = calculate_loss_and_accuracy(model, dataset_train, device)
+_, acc_test = calculate_loss_and_accuracy(model, dataset_test, device)
+print(f'正解率（学習データ）：{acc_train:.3f}')
+print(f'正解率（評価データ）：{acc_test:.3f}')
