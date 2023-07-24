@@ -1,1 +1,14 @@
-NLP100–{ƒmƒbƒN ‘æ10Í…@ Ql‚É‚µ‚½Qlita(‰ğ“š‚Ì‰ğà)https://qiita.com/nymwa/items/867e05a43060d036a174…A Ql‚É‚µ‚½GitHub(‰ğà)https://github.com/nymwa/nlp100/blob/master/chapter10.ipynb…B ‹“sƒtƒŠ[–|–óƒ^ƒXƒN(KFTT)http://www.phontron.com/kftt/index-ja.html…C Fairseq‰SÒŒü‚¯ƒ`ƒ…[ƒgƒŠƒAƒ‹https://speakerdeck.com/tktkbohshi/fairseqchu-xin-zhe-xiang-ketiyutoriaru
+NLP100æœ¬ãƒãƒƒã‚¯ ç¬¬10ç« 
+
+ï¿½ å‚è€ƒã«ã—ãŸQlita(è§£ç­”ã®è§£èª¬)
+https://qiita.com/nymwa/items/867e05a43060d036a174
+
+ï¿½ å‚è€ƒã«ã—ãŸGitHub(è§£ç­”)
+https://github.com/nymwa/nlp100/blob/master/chapter10.ipynb
+
+ï¿½ äº¬éƒ½ãƒ•ãƒªãƒ¼ç¿»è¨³ã‚¿ã‚¹ã‚¯(KFTT)
+http://www.phontron.com/kftt/index-ja.html
+
+ï¿½ Fairseqåˆå¿ƒè€…å‘ã‘ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«
+https://speakerdeck.com/tktkbohshi/fairseqchu-xin-zhe-xiang-ketiyutoriaru
+
