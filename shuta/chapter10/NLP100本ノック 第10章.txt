@@ -1,0 +1,24 @@
+NLP100本ノック 第10章
+
+1. 参考にしたQlita(解答の解説)
+https://qiita.com/nymwa/items/867e05a43060d036a174
+
+2. 参考にしたGitHub(解答)
+https://github.com/nymwa/nlp100/blob/master/chapter10.ipynb
+
+3. 京都フリー翻訳タスク(KFTT)
+http://www.phontron.com/kftt/index-ja.html
+
+4. Fairseq初心者向けチュートリアル
+https://speakerdeck.com/tktkbohshi/fairseqchu-xin-zhe-xiang-ketiyutoriaru
+
+4+α. Fairseqコマンドライン
+https://fairseq.readthedocs.io/en/latest/command_line_tools.html#fairseq-score
+
+5. BLEUとSacreBLEU
+https://www.jstage.jst.go.jp/article/jnlp/28/4/28_1312/_pdf/-char/ja
+https://arxiv.org/pdf/1804.08771.pdf
+
+6.ビームサーチ
+https://data-analytics.fun/2020/12/16/understanding-beamsearch/
+
