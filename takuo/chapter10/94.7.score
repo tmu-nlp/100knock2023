@@ -1,0 +1,2 @@
+Namespace(sys='94.7.out', ref='kftt-data-1.0/data/tok/kyoto-test.en', order=4, ignore_case=False, sacrebleu=False, sentence_bleu=False)
+BLEU4 = 5.84, 29.3/7.7/3.2/1.6 (BP=1.000, ratio=1.048, syslen=28024, reflen=26734)
